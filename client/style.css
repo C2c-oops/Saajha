@@ -1,0 +1,261 @@
+:root {
+  --main-bg-color: #eff5fe;
+  --border-color: #0288d147;
+  --box-shadow-color: #0000002e;
+  --dark-blue-color: #2196f3;
+  --container-width: 500px;
+}
+
+body,
+html {
+  font-family: Arial, Helvetica, sans-serif;
+  background: var(--main-bg-color);
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+}
+
+body,
+.drop-zone,
+.upload-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+}
+.upload-container,
+.drop-zone {
+  flex-direction: column;
+}
+
+.upload-container {
+  background: #ffffff;
+  border-radius: 25px;
+  box-shadow: 0px 20px 20px var(--box-shadow-color);
+}
+
+.drop-zone {
+  width: var(--container-width);
+  height: 200px;
+  border: 2px dashed var(--border-color);
+  margin: 30px;
+  border-radius: 10px;
+}
+
+.drop-zone.dragged {
+  background: var(--main-bg-color);
+  border-color: var(--dark-blue-color);
+}
+
+.icon-container {
+  width: 75px;
+  height: 100px;
+  position: relative;
+}
+
+.icon-container img {
+  width: 75px;
+  position: absolute;
+  transform-origin: bottom;
+  transition: transform 250ms ease-in-out;
+}
+
+.icon-container .center {
+  z-index: 2;
+}
+
+.icon-container .right,
+.icon-container .left {
+  filter: grayscale(0.5);
+  transform: scale(0.9);
+}
+
+.dragged .icon-container .right {
+  transform: rotate(10deg) translateX(20px) scale(0.9);
+}
+
+.dragged .icon-container .left {
+  transform: rotate(-10deg) translateX(-20px) scale(0.9);
+}
+
+.dragged .icon-container .center {
+  transform: translateY(-5px);
+}
+
+#fileInput {
+  display: none;
+}
+
+.browseBtn {
+  color: var(--dark-blue-color);
+  cursor: pointer;
+}
+
+.progress-container {
+  width: var(--container-width);
+  height: 70px;
+  border: 2px solid var(--main-bg-color);
+  margin-bottom: 25px;
+  border-radius: 10px;
+  position: relative;
+  display: none;
+}
+
+.progress-container .bg-progress {
+  background-color: var(--main-bg-color);
+  width: 0%;
+  height: 100%;
+  border-radius: 3%;
+  transform-origin: left;
+  transition: width 0.25s linear;
+  position: absolute;
+}
+
+.progress-container .inner-container {
+  position: absolute;
+  z-index: 1;
+  margin: 10px 15px;
+  width: calc(100% - 30px);
+}
+
+.percent-container {
+  font-size: 13px;
+  margin: 5px;
+  opacity: 0.7;
+}
+
+.progress-bar {
+  height: 3px;
+  width: 100%;
+  background: var(--dark-blue-color);
+  border-radius: 2px;
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: transform 0.25s linear;
+}
+
+.sharing-container {
+  width: var(--container-width);
+  margin-bottom: 20px;
+  display: none;
+}
+
+p {
+  opacity: 0.7;
+  text-align: center;
+}
+
+.sharing-container .download-link-container {
+  position: relative;
+}
+
+.sharing-container .download-link-container input {
+  width: 100%;
+  border: 2px dashed var(--border-color);
+  border-radius: 3px;
+  padding: 10px 15px;
+  box-sizing: border-box;
+  font-size: 20px;
+  background: #f5fcff8c;
+}
+
+.download-link-container img {
+  position: absolute;
+  height: 22px;
+  height: 30px;
+  right: 7px;
+  top: 12px;
+  background: #f7fdff;
+  cursor: pointer;
+}
+
+.email-container form {
+  width: 100%;
+  border: 2px solid var(--border-color);
+  border-radius: 10px;
+  box-sizing: border-box;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.email-container .sender-container,
+.receiver-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  width: 400px;
+}
+
+.email-container label {
+  font-size: 18px;
+  margin: 5px;
+}
+
+.email-container input {
+  font-size: 18px;
+  width: 200px;
+  border: none;
+  height: 19px;
+  border-bottom: 2px solid var(--border-color);
+  text-align: center;
+}
+
+.email-container input:focus {
+  outline: none;
+}
+
+.email-container button {
+  font-size: 18px;
+  padding: 8px 40px;
+  margin-top: 15px;
+  background: var(--main-bg-color);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  color: #607d8b;
+}
+
+.toast {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translate(-50%, 60px);
+  padding: 10px 20px;
+  border-radius: 5px;
+  background-color: var(--dark-blue-color);
+  font-size: 18px;
+  transition: transform ease-in-out 0.25;
+  box-shadow: 0px 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0px 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.upload-icon-background {
+  background: url(./upload-icon.svg) no-repeat center;
+  background-size: contain;
+  height: 50vh;
+  width: 50vw;
+}
+
+.logo {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 250px;
+}
+
+@media screen and (max-width: 900px) {
+  :root {
+    --container-width: 300px;
+  }
+  .upload-icon-background {
+    display: none;
+  }
+  .email-container .sender-container,
+  .receiver-container {
+    flex-direction: column;
+    width: 300px;
+  }
+}
