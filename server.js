@@ -1,12 +1,24 @@
 const express = require('express');
 const app = express();
+const path = require('path');
 
 const PORT = process.env.PORT || 3000;
+app.use(express.static(__dirname + '/client', {
+	index: false,
+	immutable: true,
+	cacheControl: true,
+	maxAge: "30d"
+}));
 
 const connectDB = require('./config/db')
 
 connectDB();
 
+//Template engine
+app.set('views', path.join(__dirname, '/client'));
+app.set('view engine', 'ejs');
+
+//routes
 app.use('/api/files', require('./routes/files'));
 app.use('/files', require('./routes/download'));
 

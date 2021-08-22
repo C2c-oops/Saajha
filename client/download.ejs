@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Saajha</title>
+	<link rel="stylesheet" type="text/css" href="/css/download-style.css"> 
+</head>
+<body>
+	<section class="download-container">
+		<img class="download-icon" src="/img/download.svg" alt="saajha-download" draggable="false">
+		<% if(locals.error){ %>
+		<h4><%= locals.error %>😏</h4>
+		<% } else { %>
+		<h2>Your file is ready to download</h2>
+		<p>Link expires in 24 hours</p>
+		<div class="download-meta-data">
+			<h4><%= fileName %></h4>
+			<small><%= parseInt(fileSize/1000) %> KB</small>
+		</div>
+		<div class="send-btn-container">
+			<a href="<%= downloadLink %>">Download file</a>
+		</div>
+		<% } %>
+	</section> 
+</body>
+</html>
