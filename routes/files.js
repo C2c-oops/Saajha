@@ -43,7 +43,7 @@ router.post('/', (req, res) => {
 
 		const response = await file.save();
 		// response(link for file)
-		return res.json({file: `${process.env.APP_BASE_URL_TEST}/files/${response.uuid}`});
+		return res.json({file: `${process.env.APP_BASE_URL_TEST}files/${response.uuid}`});
 		//http://localhost:3000/files/234biabsdhb4-3r4wh4fje
 	})
 });
