@@ -10,6 +10,8 @@ app.use(express.static(__dirname + '/client', {
 	maxAge: "30d"
 }));
 
+app.use(express.json());
+
 const connectDB = require('./config/db')
 
 connectDB();

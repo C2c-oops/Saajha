@@ -46,6 +46,45 @@ router.post('/', (req, res) => {
 		return res.json({file: `${process.env.APP_BASE_URL_TEST}/files/${response.uuid}`});
 		//http://localhost:3000/files/234biabsdhb4-3r4wh4fje
 	})
-})
+});
+
+router.post('/send', async (req, res) => {
+	console.log(req.body);
+	const { uuid, senderEmail, receiverEmail } = req.body;
+
+	//Validate request
+	if(!uuid || !senderEmail || !receiverEmail) {
+		return res.status(422).send({error: 'All fields are required.'});
+	}
+	
+	//getting data from db
+	const file = await File.findOne({uuid: uuid});
+	if(file.sender) {
+		return res.status(422).send({error: 'Email already sent.'});
+	}
+
+	file.sender = senderEmail;
+	file.receiver = receiverEmail;
+
+	const response = await file.save();
+
+	//send email
+	const sendMail = require('../services/emailService');
+
+	sendMail({
+		from: senderEmail,
+		to: receiverEmail,
+		subject: 'Saajha file sharing',
+		text: `${senderEmail} shared a file with you.`,
+		html: require('../services/emailTemplate')({
+			emailFrom: senderEmail,
+			downloadLink: `${process.env.APP_BASE_URL_TEST}/files/${file.uuid}`,
+			size: parseInt(file.size/1000) + ' KB',
+			expires: '24 hours'
+		})
+	});
+
+	return res.send({success: true});
+});
 
 module.exports = router;
