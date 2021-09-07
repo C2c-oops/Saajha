@@ -78,7 +78,7 @@ router.post('/send', async (req, res) => {
 		text: `${senderEmail} shared a file with you.`,
 		html: require('../services/emailTemplate')({
 			emailFrom: senderEmail,
-			downloadLink: `${process.env.APP_BASE_URL_TEST}/files/${file.uuid}`,
+			downloadLink: `${process.env.APP_BASE_URL_TEST}files/${file.uuid}`,
 			size: parseInt(file.size/1000) + ' KB',
 			expires: '24 hours'
 		})
