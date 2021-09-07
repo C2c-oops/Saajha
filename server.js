@@ -25,7 +25,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 //Template engine
-app.set('views', path.join(__dirname, '/client'));
+app.set('views', path.join(__dirname, '/client/views'));
 app.set('view engine', 'ejs');
 
 //routes
