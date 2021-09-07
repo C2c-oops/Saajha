@@ -87,7 +87,7 @@ body,
   display: none;
 }
 
-.browseBtn {
+#browseBtn {
   color: var(--dark-blue-color);
   cursor: pointer;
 }
@@ -233,7 +233,7 @@ p {
 }
 
 .upload-icon-background {
-  background: url(./upload-icon.svg) no-repeat center;
+  background: url(../assets/upload-icon.svg) no-repeat center;
   background-size: contain;
   height: 50vh;
   width: 50vw;

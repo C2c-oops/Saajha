@@ -1,11 +1,12 @@
 const dropZone = document.querySelector(".drop-zone")
 const fileInput = document.querySelector("#fileInput")
-const browseBtn = document.querySelector(".browseBtn")
+const browseBtn = document.querySelector("#browseBtn")
 
-const bgProgress = document.querySelector(".bg-Progress")
+const bgProgress = document.querySelector(".bg-progress")
 const progressBar = document.querySelector(".progress-bar")
-const percentContainer = document.querySelector("#percent")
+const percentContainer = document.querySelector(".percent-container")
 const progressContainer = document.querySelector(".progress-container")
+const status = document.querySelector(".status");
 
 const sharingContainer = document.querySelector(".sharing-container")
 const fileURL = document.querySelector("#fileURL")
@@ -36,14 +37,14 @@ dropZone.addEventListener("drop", (e) => {
 	e.preventDefault();
 	dropZone.classList.remove("dragged");
 	const files = e.dataTransfer.files;
-	console.table(files);
+	console.log(files);
 	if (files.length) {
 		fileInput.files = files;
 		uploadFiles();
 	}
 })
 
-fileInput.addEventListener("changed", () => {
+fileInput.addEventListener("change", () => {
 	uploadFiles();
 })
 
@@ -63,15 +64,16 @@ const uploadFiles = () => {
 		showToast("Only upload one file!")
 		return;
 	}
-	const file = fileInput.files[0];
-	if (file.size > maxAllowedSize) {
+	const files = fileInput.files[0];
+	if (files.size > maxAllowedSize) {
 		showToast("File size limit exceeded")
 		resetFileInput();
 		return;
 	}
-		progressContainer.style.display = "block";
+	progressContainer.style.display = "block";
+	
 	const formData = new FormData();
-	formData.append("myfile", file);
+	formData.append("userFile", files);
 
 	const xhr = new XMLHttpRequest();
 
@@ -94,11 +96,11 @@ const uploadFiles = () => {
 }
 
 const updateProgress = (e) => {
-	const percent = Math.round((e.loaded / e.total) * 100)
-	//console.log(percent);
-	bgProgress.style.width = `${percent}%`;
+	const percent = Math.round((e.loaded / e.total) * 100);
+	console.log(percent);
 	percentContainer.innerText = percent;
-	progressBar.style.transform = `scaleX(${percent}/100)`;
+	bgProgress.style.width = `${percent}%`;
+	progressBar.style.transform = `scaleX(${percent/100})`;
 }
 
 const onUploadSuccess = ({ file: url }) => {
@@ -117,12 +119,12 @@ const resetFileInput = () => {
 emailForm.addEventListener("submit", (e) => {
 	e.preventDefault();
 	console.log("Form Submitted");
-	const url = fileInput.value;
+	const url = fileURL.value;
 
 	const formData = {
 		uuid: url.split("/").splice(-1, 1)[0],
-		emailTo: emailForm.elements["to-email"].value,
-		emailFrom: emailForm.elements["from-email"].value,
+		senderEmail: emailForm.elements["from-email"].value,
+		receiverEmail: emailForm.elements["to-email"].value,
 	};
 
 	emailForm[2].setAttribute("disabled", "true");
@@ -136,13 +138,13 @@ emailForm.addEventListener("submit", (e) => {
 		},
 		body: JSON.stringify(formData)
 	})
-		.then((res) => res.json())
-		.then(({ success }) => {
+	.then((res) => res.json())
+	.then(({ success }) => {
 			if (success) {
 				sharingContainer.style.display = "none";
 				showToast("Email Sent");
 			}
-			console.log(data);
+			//console.log(data);
 		})
 })
 
